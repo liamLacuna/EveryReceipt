@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Button } from "react-native"
+import { Text, Button } from "react-native";
 
 export default class Title extends React.Component {
 
@@ -16,11 +16,11 @@ export default class Title extends React.Component {
     return(
       <React.Fragment>
         <Button
-        title="Logout"
-        onPress={this.onLogout.bind(this)} />
+          title="Logout"
+          onPress={this.onLogout.bind(this)} />
         <Button
-        title="Profile"
-        onPress={this.goToProfile.bind(this)} />
+          title="Profile"
+          onPress={this.goToProfile.bind(this)} />
         <Text>Welcome to EveryReceipt</Text>
       </React.Fragment>
     );

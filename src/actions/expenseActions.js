@@ -16,8 +16,7 @@ export const sendQuery = (newQuery) => (dispatch) => {
         type: SEARCH_EXPENSES,
         payload: res.data
       });
-    })
-    .catch(err => console.log(err));
+    });
 };
 
 export const getItems = () => (dispatch) => {
@@ -31,7 +30,7 @@ export const getItems = () => (dispatch) => {
 };
 
 export const deleteItem = (id) => (dispatch) => {
-  axios.delete(`/api/items/${id}`).then((res) =>
+  axios.delete(`/api/items/${id}`).then(() =>
     dispatch({
       type: DELETE_EXPENSE,
       payload: id

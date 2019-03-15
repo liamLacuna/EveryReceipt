@@ -1,7 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 
 import HomeScreen from "../components/HomeScreen/HomeScreen";
-import Profile from "../components/Profile/Profile"
+import Profile from "../components/Profile/Profile";
 
 /**
  * Create navigator for the home screen, which contains navigations to

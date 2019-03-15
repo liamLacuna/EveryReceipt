@@ -39,9 +39,9 @@ export default class LoginScreen extends React.Component {
         <View style={styles.logoContainer}>
           <Image source={logo} />
         </View>
-          <EmailAndPassword handleChange={this.handleChange.bind(this)} />
-          <AuthButton onPress={this.login.bind(this)} text="Login"/>
-          <AuthButton onPress={this.toggleSignUp.bind(this)} text = "Sign Up" />
+        <EmailAndPassword handleChange={this.handleChange.bind(this)} />
+        <AuthButton onPress={this.login.bind(this)} text="Login"/>
+        <AuthButton onPress={this.toggleSignUp.bind(this)} text = "Sign Up" />
       </ImageBackground>
     );
   }

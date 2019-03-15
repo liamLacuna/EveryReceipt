@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { View, StyleSheet, Button, Text } from "react-native";
 
-export default class Profile extends Component {
+export default class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.onLogout = this.onLogout.bind(this);
@@ -19,10 +19,10 @@ export default class Profile extends Component {
     return (
       <View style={styles.base}>
         <Button
-         title="Logout"
-         onPress={this.onLogout.bind(this)} />
-         <Button title="Home" onPress={this.goToHome.bind(this)} />
-         <Text>We out here</Text>
+          title="Logout"
+          onPress={this.onLogout.bind(this)} />
+        <Button title="Home" onPress={this.goToHome.bind(this)} />
+        <Text>We out here</Text>
       </View>
     );
   }
@@ -31,7 +31,7 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
   base: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center"
   }
-})
+});

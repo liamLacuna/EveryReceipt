@@ -22,7 +22,7 @@ export default class LoginScreen extends React.Component {
   toggleShow() {
     this.setState({
       hidePass: !this.state.hidePass
-    })
+    });
   }
 
   render() {
@@ -53,7 +53,7 @@ export default class LoginScreen extends React.Component {
                   <Icon name={"ios-eye"} size={26} 
                     color={"rgba(255, 255, 255, 0.7)"} />
                 </TouchableOpacity> 
-              : 
+                : 
                 <React.Fragment />}
             </View>
           );
