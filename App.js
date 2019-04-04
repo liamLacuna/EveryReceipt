@@ -1,29 +1,20 @@
-import { createSwitchNavigator, createAppContainer } from "react-navigation";
+import React from "react";
+import AppNavigator from "./src/navigator/AppNavigator";
+import { Provider } from "react-redux";
+import store from "./src/store";
+import { YellowBox } from "react-native";
+import _ from "lodash";
 
-import LoggedOutNavigator from "./src/navigator/LoggedOut";
-import HomeNavigator from "./src/navigator/Home";
+YellowBox.ignoreWarnings(["Setting a timer"]);
 
-/**
- * @param loggedIn parameter sent from the root js file in src.
- * @default false , in case we never sent a parameter
- */
-const getRootNavigator = createSwitchNavigator(
-  {
-    /**
-     * Have the root navigator know about the two other navigators 
-     * in this directory, see import statements above 
-     */
-    LoggedOut: {
-      screen: LoggedOutNavigator
-    },
-    Home: {
-      screen: HomeNavigator
-    }
-  },
-  {
-    initialRouteName: "LoggedOut"
+export default class App extends React.Component {
+
+  render() {
+    return (
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    );
   }
-);
-
-export default createAppContainer(getRootNavigator);
+}
 

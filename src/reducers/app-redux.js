@@ -1,6 +1,0 @@
-import {createStore, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
-
-const initialState = {
-  favoriteAnimal: "duck",
-};

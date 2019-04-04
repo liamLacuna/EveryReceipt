@@ -25,6 +25,10 @@ export default class LoginScreen extends React.Component {
     });
   }
 
+  handleChange(e) {
+    this.props.handleChange(e);
+  }
+
   render() {
     return(
       <React.Fragment>
@@ -40,7 +44,7 @@ export default class LoginScreen extends React.Component {
               <TextInput 
                 style={styles.input}
                 id={x.id}
-                onChange={this.props.handleChange.bind(this)}
+                onChangeText={(text) => this.props.handleChange(x.id, text)}
                 textAlign="center"
                 placeholder={x.name}
                 secureTextEntry={x.id === "password" ? 

@@ -9,7 +9,11 @@ import {
 } from "../actions/types";
   
 const initialState = {
-  expenses: [],
+  expenses: [
+    {id: "1", title: "walmart", content: "80 dollars"},
+    {id: "2", title: "safeway", content: "79 dollars"},
+    {id: "3", title: "whole foods", content: "9 dollars"},
+  ],
   expenseQuery: null,
   loading: false
 };
@@ -21,40 +25,43 @@ const initialState = {
  * @param action specifies which action is to be carried out
  */
 export default function (state = initialState, action) {
-  switch (action.type) {
-  case GET_EXPENSES:
-    return {
-      ...state,
-      expenses: action.payload,
-      loading: false
-    };
-  case DELETE_EXPENSE:
-    return {
-      ...state,
-      expenses: state.expenses.filter((expense) => expense._id !== action.payload)
-    };
-  case ADD_EXPENSE:
-    return {
-      ...state,
-      expenses: [action.payload, ...state.expenses]
-    };
-  case EXPENSES_LOADING:
-    return {
-      ...state,
-      loading: true
-    };
-  case SEARCH_EXPENSES:
-    return {
-      ...state,
-      expenseQuery: action.payload
-    };
-  case EDIT_EXPENSE:
-    return {
-      ...state
-    };
-  default:
-    return {
-      ...state
-    };
-  }
+  return state;
 }
+// export default function (state = initialState, action) {
+//   switch (action.type) {
+//   case GET_EXPENSES:
+//     return {
+//       ...state,
+//       expenses: action.payload,
+//       loading: false
+//     };
+//   case DELETE_EXPENSE:
+//     return {
+//       ...state,
+//       expenses: state.expenses.filter((expense) => expense._id !== action.payload)
+//     };
+//   case ADD_EXPENSE:
+//     return {
+//       ...state,
+//       expenses: [action.payload, ...state.expenses]
+//     };
+//   case EXPENSES_LOADING:
+//     return {
+//       ...state,
+//       loading: true
+//     };
+//   case SEARCH_EXPENSES:
+//     return {
+//       ...state,
+//       expenseQuery: action.payload
+//     };
+//   case EDIT_EXPENSE:
+//     return {
+//       ...state
+//     };
+//   default:
+//     return {
+//       ...state
+//     };
+//   }
+// }

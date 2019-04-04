@@ -1,21 +1,20 @@
 import React from "react";
 import { 
-  Text, 
-  Button, 
   ImageBackground, 
   View, 
   Image,
-  TextInput,
 } from "react-native";
 import FullName from "./FullName";
 import EmailAndPassword from "./EmailAndPassword";
-import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "./styles";
 import bgImage from "../../../assets/SignInBackground.png";
 import logo from "../../../assets/Logo.png";
 import AuthButton from "./AuthButton";
+import firebase from "firebase";
+import { connect } from "react-redux";
+import { signUp } from "../../actions/authActions";
 
-export default class LoginScreen extends React.Component {
+class SignUpScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -26,17 +25,23 @@ export default class LoginScreen extends React.Component {
     };
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.props.navigation.navigate(user ? "HomeScreen" : "SignUpScreen");
+    });
+  }
+
   login(){
-    this.props.navigation.navigate("HomeScreen");
+    this.props.signUp(this.state);
   }
 
   toggleSignUp() {
     this.props.navigation.navigate("LoginScreen");
   }
 
-  handleChange(e){
+  handleChange(id, value){
     this.setState({
-      [e.target.id]: e.target.value
+      [id]: value
     });
   }
 
@@ -54,4 +59,18 @@ export default class LoginScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: (newUser) => dispatch(signUp(newUser))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpScreen);
 
