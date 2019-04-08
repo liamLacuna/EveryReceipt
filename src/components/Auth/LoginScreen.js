@@ -1,7 +1,7 @@
 import React from "react";
-import { 
-  ImageBackground, 
-  View, 
+import {
+  ImageBackground,
+  View,
   Image,
   Text
 } from "react-native";
@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import { signIn } from "../../actions/authActions";
 
 class LoginScreen extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       email: "",
@@ -29,7 +29,7 @@ class LoginScreen extends React.Component {
     });
   }
 
-  login(){
+  login() {
     this.props.signIn(this.state);
     // this.props.navigation.navigate("HomeScreen");
   }
@@ -38,7 +38,7 @@ class LoginScreen extends React.Component {
     this.props.navigation.navigate("SignUpScreen");
   }
 
-  handleChange(id, value){
+  handleChange(id, value) {
     this.setState({
       [id]: value
     });
@@ -46,16 +46,16 @@ class LoginScreen extends React.Component {
 
   render() {
     const { authError } = this.props;
-    return(
+    return (
       <ImageBackground source={bgImage} style={styles.container}>
         <View style={styles.logoContainer}>
           <Image source={logo} />
         </View>
         <EmailAndPassword handleChange={this.handleChange.bind(this)} />
-        <AuthButton onPress={this.login.bind(this)} text="Login"/>
-        <AuthButton onPress={this.toggleSignUp.bind(this)} text = "Sign Up" />
-        <Text style={{color: "red"}}>
-          { authError ? "Login Failed." : "" }
+        <AuthButton onPress={this.login.bind(this)} text="Login" />
+        <AuthButton onPress={this.toggleSignUp.bind(this)} text="Sign Up" />
+        <Text style={{ color: "red" }}>
+          {authError ? "Login Failed." : ""}
           {this.state.email}
           {this.state.password}
         </Text>

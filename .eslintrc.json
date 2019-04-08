@@ -19,13 +19,32 @@
         "react"
     ],
     "rules": {
-        "indent": ["error", 2],
-        "linebreak-style": ["error", "unix"],
-        "quotes": ["error", "double"],
-        "semi": ["error", "always"],
+        "indent": [
+            "error",
+            2
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
         "camelcase": 2,
-        "no-cond-assign": ["error", "always"],
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "no-cond-assign": [
+            "error",
+            "always"
+        ],
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        ],
         "no-console": 2
     }
 }

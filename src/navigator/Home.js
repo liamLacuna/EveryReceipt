@@ -1,7 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 
 import HomeScreen from "../components/HomeScreen/HomeScreen";
-import Profile from "../components/Profile/Profile";
+import ManualAddScreen from "../components/HomeScreen/ManualAddScreen";
 
 /**
  * Create navigator for the home screen, which contains navigations to
@@ -13,8 +13,8 @@ const HomeNavigator = createStackNavigator({
     screen: HomeScreen
   },
   /* this.props.navigation.navigate("Profile") */
-  Profile: {
-    screen: Profile
+  ManualAddScreen: {
+    screen: ManualAddScreen
   }
 });
 
