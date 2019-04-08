@@ -8,7 +8,6 @@ import _ from "lodash";
 YellowBox.ignoreWarnings(["Setting a timer"]);
 
 export default class App extends React.Component {
-
   render() {
     return (
       <Provider store={store}>
