@@ -37,7 +37,7 @@ export default class AddButton extends React.Component {
         <ActionButton buttonColor="rgba(231,76,60,1)">
           {this.state.buttons.map((btn) => {
             return (
-              <ActionButton.Item key={btn.id} buttonColor={btn.color} title={btn.title} onPress={() => { this.props.goToManual(); }}>
+              <ActionButton.Item key={btn.id} buttonColor={btn.color} title={btn.title} onPress={() => { this.props.handlePress(btn.id); }}>
                 <Icon name={btn.icon} style={styles.actionButtonIcon} />
               </ActionButton.Item>
             );

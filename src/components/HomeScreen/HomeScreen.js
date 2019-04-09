@@ -21,13 +21,15 @@ class HomeScreen extends React.Component {
   goToProfile() {
     this.props.navigation.navigate("Profile");
   }
-  goToManualAddScreen() {
-    this.props.navigation.navigate("ManualAddScreen");
+  handlePress(btnId) {
+
+    if (btnId === "manual")
+      this.props.navigation.navigate("ManualAddScreen");
   }
   render() {
     return (
       <React.Fragment>
-        <AddButton goToManual={this.goToManualAddScreen.bind(this)} />
+        <AddButton handlePress={this.handlePress.bind(this)} />
         <Button
           title="Logout"
           onPress={this.logout.bind(this)} />
