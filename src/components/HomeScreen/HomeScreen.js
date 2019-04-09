@@ -32,6 +32,9 @@ class HomeScreen extends React.Component {
         <Button
           title="Logout"
           onPress={this.logout.bind(this)} />
+        <Button
+          title="Profile"
+          onPress={this.goToProfile.bind(this)} />
       </React.Fragment>
     );
   }

@@ -1,37 +1,35 @@
 import React from "react";
-import { View, StyleSheet, Button, Text } from "react-native";
+import { View, Button, Text } from "react-native";
+import { connect } from "react-redux";
+import UserInfo from "./UserInfo";
+import { styles } from "./styles";
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.onLogout = this.onLogout.bind(this);
   }
-
-  async onLogout() {
-    this.props.navigation.navigate("LoggedOut");
-  }
-
+  
   async goToHome() {
     this.props.navigation.navigate("HomeScreen");
   }
-
+  
   render() {
+    const { profile } = this.props;
     return (
       <View style={styles.base}>
-        <Button
-          title="Logout"
-          onPress={this.onLogout.bind(this)} />
+        <UserInfo profile={profile} />
         <Button title="Home" onPress={this.goToHome.bind(this)} />
-        <Text>We out here</Text>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  base: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
+const mapStateToProps = (state) => {
+  return {
+    profile: state.firebase.profile
+  };
+};
+
+export default connect(mapStateToProps)(Profile);
+

@@ -35,7 +35,7 @@ export const signUp = (newUser) => {
       newUser.password
     ).then((res) => {
       /* add a user to user collection with id, sets data inside */
-      return firestore.collection("users").doc(res.user.id).set({
+      return firestore.collection("users").doc(res.user.uid).set({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         initials: newUser.firstName[0] + newUser.lastName[0],
