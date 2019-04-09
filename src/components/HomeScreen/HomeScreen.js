@@ -27,7 +27,6 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <ExpenseList />
         <AddButton goToManual={this.goToManualAddScreen.bind(this)} />
         <Button
           title="Logout"
@@ -35,6 +34,7 @@ class HomeScreen extends React.Component {
         <Button
           title="Profile"
           onPress={this.goToProfile.bind(this)} />
+        <ExpenseList />
       </React.Fragment>
     );
   }

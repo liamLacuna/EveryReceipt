@@ -14,6 +14,14 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 20
   },
+  col: {
+    marginTop: 10,
+    minWidth: "20%",
+    minHeight: "10%",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     width: null,
@@ -48,6 +56,15 @@ export const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: 10
+  },
+  itemText: {
+    color: "black", 
+    fontSize: 30
+  },
+  row: {
+    minWidth: "20%",
+    minHeight: "10%",
+    flexDirection: "row",
   },
   text: {
     color: "rgba(255,255,255,0.7)",
