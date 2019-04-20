@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { styles } from "./styles";
+import { styles } from "../Common/styles";
 
 export default class UserInfo extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export default class UserInfo extends React.Component {
   
   render() {
     return (
-      <View style={styles.base} >
+      <View style={styles.container} >
         {this.state.profileData.map((x) => {
           return (
             <Text key={x.id} style={styles.profileText} >

@@ -6,10 +6,10 @@ import {
   Text
 } from "react-native";
 import EmailAndPassword from "./EmailAndPassword";
-import { styles } from "./styles";
+import { styles } from "../Common/styles";
 import bgImage from "../../../assets/SignInBackground.png";
 import logo from "../../../assets/Logo.png";
-import AuthButton from "./AuthButton";
+import CommonButton from "../Common/CommonButton";
 import firebase from "firebase";
 import { connect } from "react-redux";
 import { signIn } from "../../actions/authActions";
@@ -20,6 +20,10 @@ class LoginScreen extends React.Component {
     this.state = {
       email: "",
       password: "",
+      buttons: [
+        {text: "Login", onPress: this.login.bind(this)},
+        {text: "Sign Up", onPress: this.toggleSignUp.bind(this)}
+      ]
     };
   }
 
@@ -52,8 +56,15 @@ class LoginScreen extends React.Component {
           <Image source={logo} />
         </View>
         <EmailAndPassword handleChange={this.handleChange.bind(this)} />
-        <AuthButton onPress={this.login.bind(this)} text="Login" />
-        <AuthButton onPress={this.toggleSignUp.bind(this)} text="Sign Up" />
+        {this.state.buttons.map((btn) => {
+          return (
+            <CommonButton 
+              key={btn.text}
+              onPress={btn.onPress} 
+              text={btn.text}
+            />
+          );
+        })}
         <Text style={{ color: "red" }}>
           {authError ? "Login Failed." : ""}
           {this.state.email}

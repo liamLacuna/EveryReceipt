@@ -1,5 +1,5 @@
 //Import constant action types
-import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING, SEARCH_EXPENSES } from "./types";
+import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING, EDIT_EXPENSE, SEARCH_EXPENSES } from "./types";
 
 export const setItemsLoading = () => {
   return {
@@ -70,14 +70,20 @@ export const deleteExpense = (id) => {
   };
 };
 
-// export const deleteItem = (id) => (dispatch) => {
-//   axios.delete(`/api/items/${id}`).then(() =>
-//     dispatch({
-//       type: DELETE_EXPENSE,
-//       payload: id
-//     })
-//   );
-// };
+export const editExpense = (id, expense) => {
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    
+    var result = firestore.collection("users")
+      .doc(authorId).collection("expenses").doc(id);
+
+    result.update({expense})
+      .then(() => {
+        dispatch( { type: EDIT_EXPENSE, payload: id } );
+      });
+  };
+};
 
 // export const sendQuery = (newQuery) => (dispatch) => {
 //   axios
@@ -88,14 +94,4 @@ export const deleteExpense = (id) => {
 //         payload: res.data
 //       });
 //     });
-// };
-
-// export const editItem = (item) => (dispatch) => {
-//   // send post request to edit an s data
-//   axios.post("/api/items", item).then((res) =>
-//     dispatch({
-//       type: ADD_EXPENSE,
-//       payload: res.data
-//     })
-//   );
 // };

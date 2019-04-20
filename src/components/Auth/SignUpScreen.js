@@ -6,10 +6,10 @@ import {
 } from "react-native";
 import FullName from "./FullName";
 import EmailAndPassword from "./EmailAndPassword";
-import { styles } from "./styles";
+import { styles } from "../Common/styles";
 import bgImage from "../../../assets/SignInBackground.png";
 import logo from "../../../assets/Logo.png";
-import AuthButton from "./AuthButton";
+import CommonButton from "../Common/CommonButton";
 import firebase from "firebase";
 import { connect } from "react-redux";
 import { signUp } from "../../actions/authActions";
@@ -22,6 +22,10 @@ class SignUpScreen extends React.Component {
       lastName: "",
       email: "",
       password: "",
+      buttons: [
+        {text: "Sign Up", onPress: this.login.bind(this)},
+        {text: "Cancel", onPress: this.toggleSignUp.bind(this)}
+      ]
     };
   }
 
@@ -53,8 +57,15 @@ class SignUpScreen extends React.Component {
         </View>
         <FullName handleChange={this.handleChange.bind(this)} />
         <EmailAndPassword handleChange={this.handleChange.bind(this)} />
-        <AuthButton text="Login" onPress={this.login.bind(this)} />
-        <AuthButton text="Cancel" onPress={this.toggleSignUp.bind(this)} />
+        {this.state.buttons.map((btn) => {
+          return (
+            <CommonButton 
+              key={btn.text}
+              onPress={btn.onPress} 
+              text={btn.text}
+            />
+          );
+        })}
       </ImageBackground>
     );
   }

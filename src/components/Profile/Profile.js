@@ -1,13 +1,14 @@
 import React from "react";
-import { View, Button, Text } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import UserInfo from "./UserInfo";
-import { styles } from "./styles";
+import CommonButton from "../Common/CommonButton";
+import { styles } from "../Common/styles";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.onLogout = this.onLogout.bind(this);
+    // this.onLogout = this.onLogout.bind(this);
   }
   
   async goToHome() {
@@ -17,9 +18,12 @@ class Profile extends React.Component {
   render() {
     const { profile } = this.props;
     return (
-      <View style={styles.base}>
+      <View style={styles.container}>
         <UserInfo profile={profile} />
-        <Button title="Home" onPress={this.goToHome.bind(this)} />
+        <CommonButton
+          title="Home" 
+          onPress={this.goToHome.bind(this)} 
+        />
       </View>
     );
   }

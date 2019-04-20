@@ -3,9 +3,9 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { styles } from "./styles";
+import { styles } from "../Common/styles";
 
-export default class AuthButton extends React.Component {
+export default class HomeButton extends React.Component {
 
   // handlePress() {
   //   /* Had to move prop function here, it is upset */

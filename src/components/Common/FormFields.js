@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { View, TextInput, Button } from "react-native";
-import AuthButton from "../Auth/AuthButton";
-import { styles } from "../Auth/styles";
-import { addExpense } from "../../actions/expenseActions";
-import { connect } from "react-redux";
+import CommonButton from "./CommonButton";
+import { styles } from "./styles";
 
-class FormFields extends Component {
+export default class FormFields extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +25,18 @@ class FormFields extends Component {
     });
   }
 
+  componentDidMount() {
+    if(this.props.editActive && this.props.expense.items.length !== 0)
+    {
+      this.setState({
+        store: this.props.expense.store,
+        total: this.props.expense.total,
+        items: this.props.expense.items,
+        pairCount: this.props.expense.items.length
+      });
+    }
+  }
+
   handleItemChange(index, type, val) {
     let temp = [...this.state.items];
     if(type === "item") {
@@ -45,7 +55,7 @@ class FormFields extends Component {
       items: this.state.items,
       total: parseFloat(this.state.total).toFixed(2)
     };
-    this.props.addExpense(itemObj);
+    this.props.submit(itemObj);
   }
 
   generateKeyOrValueInputs(isKey) {
@@ -53,14 +63,32 @@ class FormFields extends Component {
     let inputId = (isKey ? "item" : "price");
     let inputElements = [];
 
-    for (let i = 0; i < this.state.pairCount + 1; i++) {
-      inputElements.push(<TextInput 
-        placeholder={`${inputType} ${i}`} 
-        id={inputId}
-        name={i} 
-        key={`${inputId}-${i}`} 
-        onChangeText={(text) => this.handleItemChange(i, inputId, text)}
-      />);
+    if(this.props.editActive && this.props.expense.items.length !== 0) {
+      for (let i = 0; i < this.state.pairCount; i++) {
+        inputElements.push(<TextInput 
+          placeholder={`${inputType} ${i}`} 
+          defaultValue={
+            this.props.editActive && i < this.props.expense.items.length ? 
+              isKey ?  
+                this.props.expense.items[i].name
+                : this.props.expense.items[i].price
+              : ""}
+          id={inputId}
+          name={i} 
+          key={`${inputId}-${i}`} 
+          onChangeText={(text) => this.handleItemChange(i, inputId, text)}
+        />);
+      }
+    } else {
+      for (let i = 0; i < this.state.pairCount + 1; i++) {
+        inputElements.push(<TextInput 
+          placeholder={`${inputType} ${i + 1}`} 
+          id={inputId}
+          name={i} 
+          key={`${inputId}-${i}`} 
+          onChangeText={(text) => this.handleItemChange(i, inputId, text)}
+        />);
+      }
     }
 
     return inputElements;
@@ -108,6 +136,7 @@ class FormFields extends Component {
               <TextInput 
                 key={f.id}
                 style={styles.input}
+                defaultValue={this.props.editActive ? this.props.expense[f.id] : ""}
                 textAlign="center"
                 underlineColorAndroid="transparent"
                 placeholder={f.name}
@@ -117,18 +146,13 @@ class FormFields extends Component {
               this.renderItemsEntry()
           );
         })}
-        <AuthButton 
-          text="Submit" 
-          onPress={this.addItemToDB.bind(this)} />
+        <CommonButton 
+          text={this.props.submitText ? this.props.submitText : "Submit"} 
+          onPress={this.addItemToDB.bind(this)}  
+        />
       </View>
     );
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addExpense: (item) => dispatch(addExpense(item))
-  };
-};
 
-export default connect(null, mapDispatchToProps)(FormFields);
 

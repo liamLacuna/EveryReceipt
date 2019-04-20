@@ -4,7 +4,7 @@ import {
   TextInput,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { styles } from "./styles";
+import { styles } from "../Common/styles";
 
 export default class LoginScreen extends React.Component {
   constructor(props){
