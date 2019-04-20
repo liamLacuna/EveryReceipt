@@ -67,8 +67,8 @@ class LoginScreen extends React.Component {
         })}
         <Text style={{ color: "red" }}>
           {authError ? "Login Failed." : ""}
-          {this.state.email}
-          {this.state.password}
+          {this.state.email === "" ? "Enter a Email.": ""}
+          {this.state.email !== "" && this.state.password === "" ? "Enter a password.": ""}
         </Text>
       </ImageBackground>
     );
