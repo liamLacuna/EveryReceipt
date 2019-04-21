@@ -39,15 +39,15 @@ export default function (state = initialState, action) {
       ...state,
       expenses: [action.payload, ...state.expenses]
     };
+  case SEARCH_EXPENSES:
+    return {
+      ...state,
+      searchResults: action.payload
+    };
   //   case EXPENSES_LOADING:
   //     return {
   //       ...state,
   //       loading: true
-  //     };
-  //   case SEARCH_EXPENSES:
-  //     return {
-  //       ...state,
-  //       expenseQuery: action.payload
   //     };
   //   case EDIT_EXPENSE:
   //     return {

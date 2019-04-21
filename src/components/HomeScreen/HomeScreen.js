@@ -1,10 +1,11 @@
 import React from "react";
 import { TouchableOpacity, Text, View } from "react-native";
 import AddButton from "./AddButton.js";
-import ExpenseList from "./ExpenseList.js";
+import ExpenseList from "../Common/ExpenseList.js";
 import CommonButton from "../Common/CommonButton.js";
 import firebase from "firebase";
 import { styles } from "../Common/styles";
+import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
 
@@ -16,7 +17,8 @@ class HomeScreen extends React.Component {
     this.state = {
       buttons: [
         {title: "Logout", onPress: this.logout.bind(this)},
-        {title: "Profile", onPress: this.goToProfile.bind(this)}
+        {title: "Profile", onPress: this.goToProfile.bind(this)},
+        {title: "Search Expenses", onPress: this.goToSearch.bind(this)}
       ]
     };
   }
@@ -25,25 +27,39 @@ class HomeScreen extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       this.props.navigation.navigate(user ? "HomeScreen" : "LoggedOut");
     });
+    this.props.getExpenses();
+  }
+
+
+  handleDelete(id) {
+    this.props.deleteExpense(id);
   }
 
   logout() {
     this.props.signOut();
   }
+
   goToProfile() {
     this.props.navigation.navigate("Profile");
   }
+
+  goToSearch() {
+    this.props.navigation.navigate("SearchScreen");
+  }
+
   toggleEdit(item) {
     this.props.navigation.navigate("ItemEdit", { 
       editItem: item
     });
   }
-  handlePress(btnId) {
 
+  handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
   }
+
   render() {
+    const { expenses } = this.props;
     return (
       <React.Fragment>
         <AddButton handlePress={this.handlePress.bind(this)} />
@@ -56,23 +72,28 @@ class HomeScreen extends React.Component {
                 onPress={btn.onPress}
               />
             );
-          })}
-          <ExpenseList toggleEdit={this.toggleEdit.bind(this)} />
+          })} 
+          <ExpenseList 
+            expenses={expenses}
+            deleteExpense={this.handleDelete.bind(this)}
+            toggleEdit={this.toggleEdit.bind(this)} />
         </View>
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    authError: state.auth.authError
+    signOut: () => dispatch(signOut()),
+    getExpenses: () => dispatch(getExpenses()),
+    deleteExpense: (id) => dispatch(deleteExpense(id))
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    signOut: () => dispatch(signOut())
+    expenses: state.expense.expenses
   };
 };
 

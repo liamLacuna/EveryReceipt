@@ -15,7 +15,7 @@ export default class ExpenseItem extends React.Component {
     let { item } = this.props;
     return (
       <View style={styles.expensePadding}>
-        <View key={item.id} style={styles.expenseItem}>
+        <View key={item.id}>
           <TouchableOpacity onPress={() => this.handleEdit(item)}>
             <Text key={item.id} style={styles.itemText}>
               {item.store}

@@ -85,13 +85,40 @@ export const editExpense = (id, expense) => {
   };
 };
 
-// export const sendQuery = (newQuery) => (dispatch) => {
-//   axios
-//     .get("/api/items/search/", { params: newQuery })
-//     .then(res => {
-//       dispatch({
-//         type: SEARCH_EXPENSES,
-//         payload: res.data
-//       });
-//     });
-// };
+export const searchExpenses = (queryType, query) => {
+  let searchResults = [];
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+
+    firestore.collection("users").doc(authorId).collection("expenses")
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          let curr = doc.data().expense;
+          let currObj = {
+            id: doc.id,
+            store: curr.store,
+            items: curr.items,
+            total: curr.total
+          };
+
+          if(queryType === "store") {
+            if(currObj.store === query) {
+              searchResults.push(currObj);
+            }
+          } else if (queryType === "price-greater-than") {
+            if(parseFloat(currObj.total) >= parseFloat(query)) {
+              searchResults.push(currObj);
+            }
+          } else if (queryType === "price-less-than") {
+            if(parseFloat(currObj.total) <= parseFloat(query)) {
+              searchResults.push(currObj);
+            }
+          }
+        });
+      }).then(() => {
+        dispatch( { type: SEARCH_EXPENSES, payload: searchResults } );
+      });
+  };
+};
