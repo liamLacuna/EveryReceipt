@@ -8,13 +8,14 @@ import { styles } from "../Common/styles";
 import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
+import { ImagePicker, Permissions, Constants } from "expo";
 
 
 class HomeScreen extends React.Component {
-
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
+      result: null,
       buttons: [
         {title: "Logout", onPress: this.logout.bind(this)},
         {title: "Profile", onPress: this.goToProfile.bind(this)},
@@ -22,7 +23,6 @@ class HomeScreen extends React.Component {
       ]
     };
   }
-
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       this.props.navigation.navigate(user ? "HomeScreen" : "LoggedOut");
@@ -48,7 +48,7 @@ class HomeScreen extends React.Component {
   }
 
   toggleEdit(item) {
-    this.props.navigation.navigate("ItemEdit", { 
+    this.props.navigation.navigate("ItemEdit", {
       editItem: item
     });
   }
@@ -56,6 +56,34 @@ class HomeScreen extends React.Component {
   handlePress(btnId) {
     if (btnId === "manual")
       this.props.navigation.navigate("ManualAddScreen");
+  }
+
+  useCameraHandler = async () => {
+    await Permissions.askAsync(Permissions.CAMERA);
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [1, 2],
+      base64: false,
+    });
+    this.setState({ result });
+  };
+  useLibraryHandler = async () => {
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [1, 2],
+      base64: false,
+    });
+    this.setState({ result });
+  };
+
+  handlePress(btnId) {
+    if (btnId === "manual")
+      this.props.navigation.navigate("ManualAddScreen");
+    if (btnId === "roll")
+      this.useLibraryHandler();
+    if (btnId === "camera")
+      this.useCameraHandler();
   }
 
   render() {

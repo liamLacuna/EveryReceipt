@@ -10,26 +10,21 @@ export default class AddButton extends React.Component {
       buttons: [
         {
           title: "Open Camera", color: "#9b59b6",
-          icon: "md-camera", onPress: this.handlePress,
+          icon: "md-camera",
           id: "camera"
         },
         {
           title: "Open Camera Roll", color: "#3498db",
-          icon: "ios-image", onPress: this.handlePress,
+          icon: "ios-image",
           id: "roll"
         },
         {
           title: "Manual Add", color: "#1abc9c",
-          icon: "md-create", onPress: this.goToManualEntry,
+          icon: "md-create",
           id: "manual"
         },
       ]
     };
-  }
-  goToManualEntry() {
-    this.props.navigation.navigate("ManualAddScreen");
-  }
-  handlePress() {
   }
   render() {
     return (

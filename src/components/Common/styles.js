@@ -18,7 +18,17 @@ export const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: "#432577",
     justifyContent: "center",
-    marginTop: 20
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  btnAdd: {
+    width: Dimensions.get("window").width - 85,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: "#3CCA41",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 20,
   },
   col: {
     marginTop: 10,

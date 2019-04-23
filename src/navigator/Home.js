@@ -1,5 +1,4 @@
 import { createSwitchNavigator } from "react-navigation";
-
 import SearchScreen from "../components/SearchScreen/SearchScreen";
 import ItemEdit from "../components/ItemEdit/ItemEdit";
 import HomeScreen from "../components/HomeScreen/HomeScreen";
@@ -30,7 +29,7 @@ const HomeNavigator = createSwitchNavigator({
   /* this.props.navigation.navigate("ManualAddScreen") */
   ManualAddScreen: {
     screen: ManualAddScreen
-  }
+  },
 });
 
 export default HomeNavigator;

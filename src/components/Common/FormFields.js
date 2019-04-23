@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { View, TextInput, Button } from "react-native";
-import CommonButton from "./CommonButton";
 import { styles } from "./styles";
+import { addExpense } from "../../actions/expenseActions";
+import { connect } from "react-redux";
+import CommonButton from "./CommonButton";
+import AddItemButton from "../ItemEntry/AddItemButton";
 
 export default class FormFields extends Component {
   constructor(props) {
@@ -117,10 +120,10 @@ export default class FormFields extends Component {
           })}
         </View>
         <View style={styles.row}>
-          <Button 
-            onPress={this.addKeyValuePair.bind(this)} 
-            style={{minWidth: 10, minHeight: 10}}
-            title="Add Another Item"
+          <AddItemButton
+            onPress={this.addKeyValuePair.bind(this)}
+            title="Add Item"
+            text="Add Item"
           />
         </View>
       </React.Fragment>
