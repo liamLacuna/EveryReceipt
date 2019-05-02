@@ -21,8 +21,13 @@ class LoginScreen extends React.Component {
       email: "",
       password: "",
       buttons: [
+<<<<<<< HEAD
         {text: "Login" },
         {text: "Sign Up" }
+=======
+        {text: "Login", onPress: this.login.bind(this)},
+        {text: "Sign Up", onPress: this.toggleSignUp.bind(this)}
+>>>>>>> handled empty field
       ],
       clicked: false
     };
@@ -52,11 +57,15 @@ class LoginScreen extends React.Component {
   }
 
   isClicked = (any) => {
+<<<<<<< HEAD
     if(any === "Login") {
       this.setState({clicked: true});
       this.login();
     }
     if(any === "Sign Up") this.toggleSignUp();
+=======
+    if(any === "Login") this.isClicked(true);
+>>>>>>> handled empty field
   }
 
   render() {
