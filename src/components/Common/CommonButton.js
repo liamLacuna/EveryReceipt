@@ -13,7 +13,7 @@ export default class AuthButton extends React.Component {
     let btnStyle = btnStyle in this.props ? this.props.btnStyle : styles.btnLogin;
 
     return(
-      <TouchableOpacity onPress={onPress} 
+      <TouchableOpacity onPress={this.props.onPress}
         style={btnStyle} >
         <Text style={txtStyle} >{text}</Text>
       </TouchableOpacity>
