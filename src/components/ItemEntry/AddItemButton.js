@@ -6,7 +6,7 @@ import {
 import {styles} from "../Common/styles";
 
 
-export default class AuthButton extends React.Component {
+export default class AddItemButton extends React.Component {
 
   // handlePress() {
   //   /* Had to move prop function here, it is upset */

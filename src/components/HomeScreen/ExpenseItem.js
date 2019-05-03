@@ -40,7 +40,7 @@ export default class ExpenseItem extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.deleteBtn}>
-          <Button title="x"
+          <Button title="x" color="#ff0000"
             onPress={() => {  
               this.props.handleDelete(item.id);
             }} /> 

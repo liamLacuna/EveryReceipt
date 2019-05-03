@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, Button } from "react-native";
+import {View, TextInput, Button, ScrollView} from "react-native";
 import { styles } from "./styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
@@ -110,15 +110,17 @@ export default class FormFields extends Component {
     let entries = [1, 0];
     return (
       <React.Fragment key={"items-entry"}>
-        <View style={styles.row}>
-          {entries.map((x) => {
-            return ( 
-              <View key={x} style={styles.col}>
-                {this.generateKeyOrValueInputs(x)}
-              </View>
-            );
-          })}
-        </View>
+        <ScrollView>
+          <View style={styles.row}>
+            {entries.map((x) => {
+              return ( 
+                <View key={x} style={styles.col}>
+                  {this.generateKeyOrValueInputs(x)}
+                </View>
+              );
+            })}
+          </View>
+        </ScrollView>
         <View style={styles.row}>
           <AddItemButton
             onPress={this.addKeyValuePair.bind(this)}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import {Button, View} from "react-native";
 import FormFields from "./../Common/FormFields";
 import { styles } from "../Common/styles";
 import { addExpense } from "../../actions/expenseActions";
@@ -24,16 +24,11 @@ class ManualAddScreen extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this.handleGoBack.bind(this)}>
-          <Text>
-            Cancel
-          </Text>
-        </TouchableOpacity>
-        <FormFields submit={this.addExpense.bind(this)} />
-      </View>
-    );
+    return <View style={styles.manualadd}>
+      <Button title="back" onPress={this.handleGoBack.bind(this)}>
+      </Button>
+      <FormFields submit={this.addExpense.bind(this)}/>
+    </View>;
   }
 }
 

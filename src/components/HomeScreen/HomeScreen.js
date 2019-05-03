@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text, View } from "react-native";
+import {TouchableOpacity, Text, View, ScrollView} from "react-native";
 import AddButton from "./AddButton.js";
 import ExpenseList from "../Common/ExpenseList.js";
 import CommonButton from "../Common/CommonButton.js";
@@ -94,17 +94,19 @@ class HomeScreen extends React.Component {
         <View style={styles.container}>
           {this.state.buttons.map((btn) => {
             return (
-              <CommonButton 
-                key={btn.title} 
-                text={btn.title} 
+              <CommonButton
+                key={btn.title}
+                text={btn.title}
                 onPress={btn.onPress}
               />
             );
-          })} 
-          <ExpenseList 
-            expenses={expenses}
-            deleteExpense={this.handleDelete.bind(this)}
-            toggleEdit={this.toggleEdit.bind(this)} />
+          })}
+          <ScrollView>
+            <ExpenseList
+              expenses={expenses}
+              deleteExpense={this.handleDelete.bind(this)}
+              toggleEdit={this.toggleEdit.bind(this)} />
+          </ScrollView>
         </View>
       </React.Fragment>
     );

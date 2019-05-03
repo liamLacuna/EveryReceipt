@@ -44,6 +44,16 @@ export const styles = StyleSheet.create({
     height: null,
     justifyContent: "center",
     alignItems: "center",
+    paddingTop: 50,
+  },
+  manualadd: {
+    flex: 1,
+    width: null,
+    height: null,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 100,
+    paddingBottom: 50,
   },
   dropdown: {
     width: Dimensions.get("window").width - 125,
@@ -51,7 +61,7 @@ export const styles = StyleSheet.create({
   },
   deleteBtn: {
     position: "absolute",
-    right: 0
+    right: 0,
   },
   expenseItem: {
     position: "relative",
@@ -60,7 +70,9 @@ export const styles = StyleSheet.create({
     marginHorizontal: 25
   },
   expensePadding: {
-    padding: 20
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 50
   },
   logoContainer: {
     alignItems: "center",
