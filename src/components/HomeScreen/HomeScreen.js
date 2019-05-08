@@ -1,5 +1,5 @@
 import React from "react";
-import {TouchableOpacity, Text, View, ScrollView} from "react-native";
+import { Modal, Text, View, ScrollView} from "react-native";
 import AddButton from "./AddButton.js";
 import ExpenseList from "../Common/ExpenseList.js";
 import CommonButton from "../Common/CommonButton.js";
@@ -8,6 +8,7 @@ import { styles } from "../Common/styles";
 import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
+import { key } from "../../config/api_key";
 import { ImagePicker, Permissions, Constants } from "expo";
 
 
@@ -15,12 +16,15 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: null,
+      loading: false,
       buttons: [
         {title: "Logout", onPress: this.logout.bind(this)},
         {title: "Profile", onPress: this.goToProfile.bind(this)},
         {title: "Search Expenses", onPress: this.goToSearch.bind(this)}
-      ]
+      ],
+      modalVisible: false,
+      valueParsed: false,
+      parsedObj: { }
     };
   }
   componentDidMount() {
@@ -30,6 +34,11 @@ class HomeScreen extends React.Component {
     this.props.getExpenses();
   }
 
+  setModalVisible() {
+    this.setState({
+      modalVisible: !this.state.modalVisible
+    });
+  }
 
   handleDelete(id) {
     this.props.deleteExpense(id);
@@ -58,23 +67,108 @@ class HomeScreen extends React.Component {
       this.props.navigation.navigate("ManualAddScreen");
   }
 
+  handleCloudOCR = async (uri) => {
+    if (typeof uri === "undefined") return;
+    
+    try {
+      let body = JSON.stringify({
+        requests: [
+          {
+            features: [
+              { type: "DOCUMENT_TEXT_DETECTION", maxResults: 10 },
+            ],
+            image: {
+              content: uri
+            }
+          }
+        ]
+      });
+      let response = await fetch(
+        "https://vision.googleapis.com/v1/images:annotate?key=" +
+          key,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "POST",
+          body: body
+        }
+      );
+
+      let store = null;
+      
+      let test = JSON.stringify(response);
+      test = 
+        test.substring(
+          test.lastIndexOf("\"text\\"), test.lastIndexOf("}"));
+      test = test.split("\\n");
+
+      let result = -1;
+      for(var i in test) {
+        if(test[i].toLowerCase().indexOf("total") !== -1 &&
+        test[i].toLowerCase().indexOf("subtotal") === -1) {
+          let total = test[i].match(/\d+(?:\.\d+)?/g);
+          if(total !== null) {
+            result = total[0];
+          }
+          break;
+        }
+        if (test[i].toLowerCase().includes("walmart")) {
+          store = "Walmart";
+        } else if (test[i].toLowerCase().includes("target")) {
+          store = "Target";
+        } else if (test[i].toLowerCase().includes("walgreens")) {
+          store = "Walgreens";
+        }
+      }
+      
+      if(result !== -1 || store !== null) {
+        
+        const parsedObj = {
+          total: result === -1 ? "" : result,
+          store: store === null ? "" : store
+        };
+        this.setState({
+          parsedObj
+        });
+        setTimeout(() => { }, 1000);
+        this.setState({
+          valueParsed: true
+        });
+        this.handleAddingOCRItem(parsedObj);
+      } else {
+        this.setModalVisible();
+      }
+    } catch(err) {
+      // console.error(err);
+    }
+  }
+
+  handleAddingOCRItem(item) {
+    if(this.state.valueParsed) {
+      this.props.navigation.navigate("ManualAddScreen", {
+        ocrValue: item
+      });
+    }
+  }
+
   useCameraHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA);
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [1, 2],
-      base64: false,
+      base64: true,
     });
-    this.setState({ result });
+    this.handleCloudOCR(result.base64);
   };
   useLibraryHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [1, 2],
-      base64: false,
+      base64: true,
     });
     this.setState({ result });
+    this.handleCloudOCR(result.base64);
   };
 
   handlePress(btnId) {
@@ -101,6 +195,17 @@ class HomeScreen extends React.Component {
               />
             );
           })}
+          <Modal
+            transparent={false}
+            animationType="slide"
+            visible={this.state.modalVisible}
+            onRequestClose={() => { this.setModalVisible(); }}>
+            <View style={styles.container}>
+              <Text style={styles.logoText} >
+                Sorry, we coulnd't get anything from your scan!
+              </Text>
+            </View>
+          </Modal> 
           <ScrollView>
             <ExpenseList
               expenses={expenses}

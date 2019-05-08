@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 100,
-    paddingBottom: 50,
+    paddingBottom: 100,
   },
   dropdown: {
     width: Dimensions.get("window").width - 125,

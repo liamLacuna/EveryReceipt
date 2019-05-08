@@ -29,13 +29,24 @@ export default class FormFields extends Component {
   }
 
   componentDidMount() {
+    this.ensureValesSaved();
+  }
+
+  ensureValesSaved() {
     if(this.props.editActive && this.props.expense.items.length !== 0)
-    {
+    { 
       this.setState({
         store: this.props.expense.store,
         total: this.props.expense.total,
         items: this.props.expense.items,
         pairCount: this.props.expense.items.length
+      });
+    }
+    else if(this.props.fromOCR)
+    {
+      this.setState({
+        store: this.props.expense.store,
+        total: this.props.expense.total
       });
     }
   }
@@ -110,17 +121,15 @@ export default class FormFields extends Component {
     let entries = [1, 0];
     return (
       <React.Fragment key={"items-entry"}>
-        <ScrollView>
-          <View style={styles.row}>
-            {entries.map((x) => {
-              return ( 
-                <View key={x} style={styles.col}>
-                  {this.generateKeyOrValueInputs(x)}
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
+        <View style={styles.row}>
+          {entries.map((x) => {
+            return ( 
+              <View key={x} style={styles.col}>
+                {this.generateKeyOrValueInputs(x)}
+              </View>
+            );
+          })}
+        </View>
         <View style={styles.row}>
           <AddItemButton
             onPress={this.addKeyValuePair.bind(this)}
@@ -141,7 +150,8 @@ export default class FormFields extends Component {
               <TextInput 
                 key={f.id}
                 style={styles.input}
-                defaultValue={this.props.editActive ? this.props.expense[f.id] : ""}
+                defaultValue={this.props.editActive || this.props.fromOCR
+                  ? this.props.expense[f.id] : ""}
                 textAlign="center"
                 underlineColorAndroid="transparent"
                 placeholder={f.name}

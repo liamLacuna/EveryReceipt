@@ -14,7 +14,7 @@ export default class ExpenseItem extends React.Component {
   render() {
     let { item } = this.props;
     return (
-      <View style={styles.expensePadding}>
+      <View key={item.id} style={styles.expensePadding}>
         <View key={item.id}>
           <TouchableOpacity onPress={() => this.handleEdit(item)}>
             <Text key={item.id} style={styles.itemText}>
@@ -25,10 +25,13 @@ export default class ExpenseItem extends React.Component {
                 item.items.map((x) => {
                   return (
                     <React.Fragment key={Math.random(100)}>
-                      {x &&
-                      <Text>
-                        {x.name} , ${x.price}
-                      </Text>
+                      {x.name !== "" && x.price !== "" 
+                        && typeof x.name !== "undefined" 
+                        && typeof x.price !== "undefined"?
+                        <Text>
+                          {x.name} , ${x.price}
+                        </Text>
+                        : <React.Fragment/>
                       }
                     </React.Fragment>
                   );
