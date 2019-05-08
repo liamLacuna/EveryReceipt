@@ -72,7 +72,8 @@ export const styles = StyleSheet.create({
   expensePadding: {
     paddingLeft: 20,
     paddingRight: 20,
-    paddingBottom: 50
+    paddingBottom: 20,
+    width: Dimensions.get("window").width - 85
   },
   logoContainer: {
     alignItems: "center",
@@ -80,7 +81,7 @@ export const styles = StyleSheet.create({
   },
   logoText: {
     color: "black",
-    fontSize: 20,
+    fontSize: 35,
     fontWeight: "500",
     marginTop: 10,
     opacity: 0.5
@@ -126,11 +127,6 @@ export const styles = StyleSheet.create({
     minHeight: "10%",
     flexDirection: "row",
   },
-  text: {
-    color: "rgba(255,255,255,0.7)",
-    fontSize: 16,
-    textAlign: "center"
-  },
   search: {
     width: Dimensions.get("window").width - 135,
     height: 45,
@@ -139,6 +135,11 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.35)",
     color: "rgba(255,255,255,0.7)",
     marginHorizontal: 25
+  },
+  text: {
+    color: "rgba(255,255,255,0.7)",
+    fontSize: 16,
+    textAlign: "center"
   },
 });
 

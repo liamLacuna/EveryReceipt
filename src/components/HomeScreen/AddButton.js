@@ -9,17 +9,17 @@ export default class AddButton extends React.Component {
     this.state = {
       buttons: [
         {
-          title: "Open Camera", color: "#9b59b6",
+          color: "#9b59b6",
           icon: "md-camera",
           id: "camera"
         },
         {
-          title: "Open Camera Roll", color: "#3498db",
+          color: "#3498db",
           icon: "ios-image",
           id: "roll"
         },
         {
-          title: "Manual Add", color: "#1abc9c",
+          color: "#1abc9c",
           icon: "md-create",
           id: "manual"
         },
@@ -32,7 +32,11 @@ export default class AddButton extends React.Component {
         <ActionButton buttonColor="rgba(231,76,60,1)">
           {this.state.buttons.map((btn) => {
             return (
-              <ActionButton.Item key={btn.id} buttonColor={btn.color} title={btn.title} onPress={() => { this.props.handlePress(btn.id); }}>
+              <ActionButton.Item 
+                key={btn.id} 
+                buttonColor={btn.color} 
+                title={btn.title} 
+                onPress={() => { this.props.handlePress(btn.id); }}>
                 <Icon name={btn.icon} style={styles.actionButtonIcon} />
               </ActionButton.Item>
             );

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, CameraRoll } from "react-native";
 import { connect } from "react-redux";
 import UserInfo from "./UserInfo";
 import CommonButton from "../Common/CommonButton";
@@ -8,9 +8,18 @@ import { styles } from "../Common/styles";
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    // this.onLogout = this.onLogout.bind(this);
+    this.state = {
+      buttons: [
+        {name: "Home", callback: this.goToHome.bind(this)},
+        {name: "Screenshot all expenses", callback: this.seeAllExpenses.bind(this)}
+      ]
+    };
   }
   
+  async seeAllExpenses() {
+    this.props.navigation.navigate("AllExpenses");
+  }
+
   async goToHome() {
     this.props.navigation.navigate("HomeScreen");
   }
@@ -18,12 +27,17 @@ class Profile extends React.Component {
   render() {
     const { profile } = this.props;
     return (
-      <View style={styles.container}>
+      <View style={styles.container} ref={this.imgRef}>
         <UserInfo profile={profile} />
-        <CommonButton
-          title="Home" 
-          onPress={this.goToHome.bind(this)} 
-        />
+        {this.state.buttons.map((btn) => {
+          return (
+            <CommonButton
+              key={btn.name}
+              text={btn.name} 
+              onPress={btn.callback}
+            />
+          );
+        })}
       </View>
     );
   }

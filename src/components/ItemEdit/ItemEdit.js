@@ -12,6 +12,7 @@ class ItemEdit extends React.Component {
     this.state = {
       editActive: false,
       prevouslyEdited: false,
+      error: false,
       //item fields
       id: "",
       store: "",
@@ -23,6 +24,12 @@ class ItemEdit extends React.Component {
   componentDidMount() {
     this.setState({
       item: this.props.navigation.state.params.item
+    });
+  }
+
+  showError() {
+    this.setState({
+      error: true
     });
   }
 
@@ -61,6 +68,13 @@ class ItemEdit extends React.Component {
 
   renderItemsFromExpense(itemList) {
     let index = 1;
+    if(itemList.length === 0) {
+      return (
+        <React.Fragment>
+          <Text style={styles.itemSubText}>No Items.</Text>
+        </React.Fragment>
+      );
+    }
     return (
       <React.Fragment>
         {itemList.map((item) => {
@@ -95,7 +109,8 @@ class ItemEdit extends React.Component {
         total: this.state.total
       };
       return(
-        <FormFields 
+        <FormFields
+          error={this.showError.bind(this)}
           editActive={true}
           expense={expense}
           submit={this.submitEdit.bind(this)}
@@ -126,7 +141,10 @@ class ItemEdit extends React.Component {
   renderButtons() {
     if(this.state.editActive) {
       return(
-        <CommonButton text={"Cancel"} onPress={this.hideEditor.bind(this)} />
+        <React.Fragment>
+          <Text style={{ color: "red" }}>{this.state.error ? "Please enter valid fields." : ""}</Text>
+          <CommonButton text={"Cancel"} onPress={this.hideEditor.bind(this)} />
+        </React.Fragment>
       );
     } else {
       return (

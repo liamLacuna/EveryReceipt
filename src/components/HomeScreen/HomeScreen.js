@@ -5,7 +5,7 @@ import ExpenseList from "../Common/ExpenseList.js";
 import CommonButton from "../Common/CommonButton.js";
 import firebase from "firebase";
 import { styles } from "../Common/styles";
-import { getExpenses, addExpense, deleteExpense } from "../../actions/expenseActions";
+import { getExpenses, deleteExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
 import { key } from "../../config/api_key";
@@ -140,9 +140,7 @@ class HomeScreen extends React.Component {
       } else {
         this.setModalVisible();
       }
-    } catch(err) {
-      // console.error(err);
-    }
+    } catch(err) { }
   }
 
   handleAddingOCRItem(item) {

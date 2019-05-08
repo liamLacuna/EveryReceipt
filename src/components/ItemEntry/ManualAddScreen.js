@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Button, View} from "react-native";
+import { Button, View, Text } from "react-native";
 import FormFields from "./../Common/FormFields";
 import { styles } from "../Common/styles";
 import { addExpense } from "../../actions/expenseActions";
@@ -9,10 +9,17 @@ class ManualAddScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ocrActive: false
+      ocrActive: false,
+      error: false
     };
     this.ocrItem = {};
   };
+
+  showError() {
+    this.setState({
+      error: true
+    });
+  }
   
   renderOCRFields() {
     let ocrActive = false;
@@ -34,11 +41,14 @@ class ManualAddScreen extends Component {
           fromOCR={true}
           editActive={false}
           expense={this.ocrItem}
+          error={this.showError.bind(this)}
           submit={this.addExpense.bind(this)}/>
       );
     } else {
       return (
-        <FormFields submit={this.addExpense.bind(this)}/>
+        <FormFields 
+          error={this.showError.bind(this)}
+          submit={this.addExpense.bind(this)}/>
       );
     }
   }
@@ -57,6 +67,7 @@ class ManualAddScreen extends Component {
         <Button title="back" onPress={this.handleGoBack.bind(this)}>
         </Button>
         {this.renderOCRFields()}
+        <Text style={{ color: "red" }}>{this.state.error ? "Please enter valid fields." : ""}</Text>
       </View>
     );
   }

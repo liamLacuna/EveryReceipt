@@ -14,10 +14,10 @@ export default class ExpenseList extends React.Component {
     const { expenses } = this.props;
     return(
       <React.Fragment>
-        {expenses.map((exp) => {
+        {expenses.map((exp, key) => {
           return(
             <ExpenseItem 
-              key={exp.id} 
+              key={key} 
               handleDelete={this.handleDelete.bind(this)}
               toggleEdit={this.props.toggleEdit.bind(this)}
               item={exp} />

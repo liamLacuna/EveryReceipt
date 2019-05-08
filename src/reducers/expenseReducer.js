@@ -3,9 +3,8 @@ import {
   GET_EXPENSES,
   ADD_EXPENSE,
   DELETE_EXPENSE,
-  EXPENSES_LOADING,
   SEARCH_EXPENSES,
-  EDIT_EXPENSE
+  GET_TOTAL_PRICE
 } from "../actions/types";
   
 const initialState = {
@@ -44,15 +43,11 @@ export default function (state = initialState, action) {
       ...state,
       searchResults: action.payload
     };
-  //   case EXPENSES_LOADING:
-  //     return {
-  //       ...state,
-  //       loading: true
-  //     };
-  //   case EDIT_EXPENSE:
-  //     return {
-  //       ...state
-  //     };
+  case GET_TOTAL_PRICE:
+    return {
+      ...state,
+      totalPrice: action.payload
+    };
   default:
     return {
       ...state
