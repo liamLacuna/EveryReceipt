@@ -10,24 +10,15 @@ import Profile from "../components/Profile/Profile";
  * Create navigator for the home screen, which contains navigations to
  * the app's home screen or user profile.
  */
-const HomeNavigator = createSwitchNavigator(
-  {
-    /* this.props.navigation.navigate("ItemEdit") */
-    ItemEdit: {
-      screen: ItemEdit
-    },
-    /* this.props.navigation.navigate("HomeScreen") */
-    HomeScreen: {
-      screen: HomeScreen
-    },
-    /* this.props.navigation.navigate("ManualAddScreen") */
-    ManualAddScreen: {
-      screen: ManualAddScreen
-    },
+const SearchNavigator = createSwitchNavigator({
+  /* this.props.navigation.navigate("SearchScreen") */
+  SearchScreen: {
+    screen: SearchScreen
   },
-  {
-    initialRouteName: "HomeScreen"
-  }
-);
+  /* this.props.navigation.navigate("ItemEdit") */
+  ItemEdit: {
+    screen: ItemEdit
+  },
+});
 
-export default HomeNavigator;
+export default SearchNavigator;

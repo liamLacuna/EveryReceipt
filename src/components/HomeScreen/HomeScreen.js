@@ -19,8 +19,6 @@ class HomeScreen extends React.Component {
       loading: false,
       buttons: [
         {title: "Logout", onPress: this.logout.bind(this)},
-        {title: "Profile", onPress: this.goToProfile.bind(this)},
-        {title: "Search Expenses", onPress: this.goToSearch.bind(this)}
       ],
       modalVisible: false,
       valueParsed: false,
@@ -46,14 +44,6 @@ class HomeScreen extends React.Component {
 
   logout() {
     this.props.signOut();
-  }
-
-  goToProfile() {
-    this.props.navigation.navigate("Profile");
-  }
-
-  goToSearch() {
-    this.props.navigation.navigate("SearchScreen");
   }
 
   toggleEdit(item) {

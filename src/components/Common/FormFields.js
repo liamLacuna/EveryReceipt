@@ -33,25 +33,29 @@ export default class FormFields extends Component {
   }
 
   ensureValesSaved() {
-    if(this.props.editActive && this.props.expense.items.length !== 0)
+    
+    let { expense } = this.props;
+    if(this.props.editActive)
     { 
+      let count = expense.items.length;
+      let items = expense.items.length ? expense.items : [{}];
       this.setState({
-        store: this.props.expense.store,
-        total: this.props.expense.total,
-        items: this.props.expense.items,
-        pairCount: this.props.expense.items.length
+        store: expense.store,
+        total: expense.total,
+        items: items,
+        pairCount: count
       });
     }
     else if(this.props.fromOCR)
     {
       this.setState({
-        store: this.props.expense.store,
-        total: this.props.expense.total
+        store: expense.store,
+        total: expense.total
       });
     }
   }
 
-  handleItemChange(index, type, val) {
+  handleItemChange(index, type, val) {  
     let temp = [...this.state.items];
     if(type === "item") {
       temp[index].name = val;

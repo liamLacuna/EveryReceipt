@@ -10,7 +10,6 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       buttons: [
-        {name: "Home", callback: this.goToHome.bind(this)},
         {name: "Screenshot all expenses", callback: this.seeAllExpenses.bind(this)}
       ]
     };
@@ -18,10 +17,6 @@ class Profile extends React.Component {
   
   async seeAllExpenses() {
     this.props.navigation.navigate("AllExpenses");
-  }
-
-  async goToHome() {
-    this.props.navigation.navigate("HomeScreen");
   }
   
   render() {
@@ -49,5 +44,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, null)(Profile);
 
