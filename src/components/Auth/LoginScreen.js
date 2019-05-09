@@ -57,15 +57,11 @@ class LoginScreen extends React.Component {
   }
 
   isClicked = (any) => {
-<<<<<<< HEAD
     if(any === "Login") {
       this.setState({clicked: true});
       this.login();
     }
     if(any === "Sign Up") this.toggleSignUp();
-=======
-    if(any === "Login") this.isClicked(true);
->>>>>>> handled empty field
   }
 
   render() {
