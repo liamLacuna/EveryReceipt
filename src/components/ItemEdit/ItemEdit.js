@@ -150,7 +150,7 @@ class ItemEdit extends React.Component {
       return (
         <React.Fragment>
           <CommonButton text={"Edit Item"} onPress={this.openEditor.bind(this)} />
-          <CommonButton text={"Go Back to Home"} onPress={this.goHome.bind(this)} />
+          <CommonButton text={"Go Back"} onPress={this.goHome.bind(this)} />
         </React.Fragment>
       );
     }

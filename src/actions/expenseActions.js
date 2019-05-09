@@ -9,6 +9,14 @@ import {
   GET_TOTAL_PRICE
 } from "./types";
 
+sorter = (arr) => {
+  return arr.sort(
+    (a,b) => 
+      (parseInt(a.timestamp) > parseInt(b.timestamp)) ? -1 : 
+        ((parseInt(b.timestamp) > parseInt(a.timestamp)) ? 1 
+          : 0)); 
+};
+
 export const setItemsLoading = () => {
   return {
     type: EXPENSES_LOADING
@@ -42,11 +50,13 @@ export const getExpenses = () => {
             id: doc.id,
             store: curr.store,
             items: curr.items,
+            timestamp: curr.timestamp,
             total: curr.total
           };
           expenses.push(currObj);
         });
       }).then(() => {
+        expenses = sorter(expenses);
         dispatch( { type: GET_EXPENSES, payload: expenses } );
       });
   };
@@ -109,7 +119,7 @@ export const searchExpenses = (queryType, query) => {
           };
 
           if(queryType === "store") {
-            if(currObj.store === query) {
+            if(currObj.store.toLowerCase() === query.toLowerCase()) {
               searchResults.push(currObj);
             }
           } else if (queryType === "price-greater-than") {

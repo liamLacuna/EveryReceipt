@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import {View, TextInput, Button, ScrollView} from "react-native";
+import { View, TextInput } from "react-native";
 import { styles } from "./styles";
-import { addExpense } from "../../actions/expenseActions";
-import { connect } from "react-redux";
 import CommonButton from "./CommonButton";
 import AddItemButton from "../ItemEntry/AddItemButton";
 
@@ -84,6 +82,7 @@ export default class FormFields extends Component {
 
     if(valid) {
       let itemObj = {
+        timestamp: Date.now(),
         store: this.state.store,
         items: expenseItems,
         total: parseFloat(this.state.total).toFixed(2)
