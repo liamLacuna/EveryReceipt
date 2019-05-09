@@ -59,9 +59,23 @@ class LoginScreen extends React.Component {
     if(any === "Sign Up") this.toggleSignUp();
   }
 
-  render() {
+  renderErrorMsg() {
     const { authError } = this.props;
-    const clicked = this.state.clicked;
+    const { clicked } = this.state;
+    if(clicked && this.state.email === "") {
+      return "Enter an Email.";
+    } else if (clicked && this.state.email !== "" 
+    && this.state.password === "") {
+      return "Enter a password.";
+    } else if (authError && this.state.email !== ""
+    && this.state.password !== "") {
+      return "Login failed.";
+    } else {
+      return "";
+    }
+  }
+
+  render() {
     return (
       <ImageBackground source={bgImage} style={styles.container}>
         <View style={styles.logoContainer}>
@@ -78,9 +92,7 @@ class LoginScreen extends React.Component {
           );
         })}
         <Text style={{ color: "red" }}>
-          {clicked && this.state.email === "" ? "Enter a Email.": ""}
-          {clicked && this.state.email !== "" && this.state.password === "" ? "Enter a password.": ""}
-          {authError && this.state.email !== "" && this.state.password !== "" ? "Login Failed." : ""}
+          {this.renderErrorMsg()}
         </Text>
       </ImageBackground>
     );
