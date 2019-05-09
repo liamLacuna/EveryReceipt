@@ -174,15 +174,6 @@ class HomeScreen extends React.Component {
       <React.Fragment>
         <AddButton handlePress={this.handlePress.bind(this)} />
         <View style={styles.container}>
-          {this.state.buttons.map((btn) => {
-            return (
-              <CommonButton
-                key={btn.title}
-                text={btn.title}
-                onPress={btn.onPress}
-              />
-            );
-          })}
           <Modal
             transparent={false}
             animationType="slide"
