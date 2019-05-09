@@ -22,7 +22,7 @@ class LoginScreen extends React.Component {
       password: "",
       buttons: [
         {text: "Login" },
-        {text: "Sign Up" }
+        {text: "Sign Up"}
       ],
       clicked: false
     };
