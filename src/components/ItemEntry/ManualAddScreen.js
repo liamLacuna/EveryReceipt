@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Button, View, Text } from "react-native";
+import { View, Text } from "react-native";
 import FormFields from "./../Common/FormFields";
 import { styles } from "../Common/styles";
 import { addExpense } from "../../actions/expenseActions";
 import { connect } from "react-redux";
+import CommonButton from "../Common/CommonButton";
+
 
 class ManualAddScreen extends Component {
   constructor(props) {
@@ -64,8 +66,8 @@ class ManualAddScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="back" onPress={this.handleGoBack.bind(this)}>
-        </Button>
+        <CommonButton text="Go Back" onPress={this.handleGoBack.bind(this)}>
+        </CommonButton>
         {this.renderOCRFields()}
         <Text style={{ color: "red" }}>{this.state.error ? "Please enter valid fields." : ""}</Text>
       </View>

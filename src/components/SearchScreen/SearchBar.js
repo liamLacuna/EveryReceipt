@@ -1,10 +1,9 @@
 import React from "react";
-import { 
+import {
   TextInput,
   Picker,
-  Button,
   Text,
-  View
+  View, TouchableOpacity
 } from "react-native";
 import { styles } from "../Common/styles";
 
@@ -57,10 +56,10 @@ export default class SearchBar extends React.Component {
           }
         </Picker>
         {/* </View> */}
-        <Button 
-          onPress={this.handleSearch.bind(this)} 
-          style={{minWidth: 10, minHeight: 10}}
-          title="Search"/>
+        <TouchableOpacity onPress={this.handleSearch.bind(this)}
+          style={styles.btnAdd} >
+          <Text style={styles.text} >Search</Text>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -194,7 +194,7 @@ class HomeScreen extends React.Component {
               </Text>
             </View>
           </Modal> 
-          <ScrollView>
+          <ScrollView style={styles.scrollView}>
             <ExpenseList
               expenses={expenses}
               deleteExpense={this.handleDelete.bind(this)}

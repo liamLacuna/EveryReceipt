@@ -2,10 +2,9 @@ import { StyleSheet, Dimensions } from "react-native";
 
 export const styles = StyleSheet.create({
   backButton: {
-    ...StyleSheet.absoluteFillObject,
-    alignSelf: "flex-end",
-    marginTop: -5,
-    position: "absolute", // add if dont work with above
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
   },
   btnEye: {
     position: "absolute",
@@ -61,7 +60,7 @@ export const styles = StyleSheet.create({
   },
   deleteBtn: {
     position: "absolute",
-    right: 0,
+    right: 65,
   },
   expenseItem: {
     position: "relative",
@@ -73,7 +72,7 @@ export const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 20,
-    width: Dimensions.get("window").width - 85
+    width: Dimensions.get("window").width - 65
   },
   logoContainer: {
     alignItems: "center",
@@ -135,6 +134,10 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.35)",
     color: "rgba(255,255,255,0.7)",
     marginHorizontal: 25
+  },
+  scrollView: {
+    marginRight: 100,
+    marginLeft: 20
   },
   text: {
     color: "rgba(255,255,255,0.7)",

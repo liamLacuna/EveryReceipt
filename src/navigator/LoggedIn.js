@@ -12,11 +12,11 @@ import HomeNavigator from "./Home";
  */
 const LoggedInNavigator = createBottomTabNavigator(
   {
-    Home: {
-      screen: HomeNavigator
-    },
     Search: {
       screen: SearchNavigator
+    },
+    Home: {
+      screen: HomeNavigator
     },
     Profile: {
       screen: ProfileNavigator
@@ -29,13 +29,13 @@ const LoggedInNavigator = createBottomTabNavigator(
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === "Home") {
-          iconName = "ios-information-circle";
+          iconName = "ios-home";
 
         } else if (routeName === "Search") {
-          iconName = "ios-options";
+          iconName = "ios-search";
         }
         else if (routeName === "Profile") {
-          iconName = "ios-options";
+          iconName = "ios-person";
         }
 
         // You can return any component that you like here!
@@ -43,7 +43,7 @@ const LoggedInNavigator = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: "tomato",
+      activeTintColor: "purple",
       inactiveTintColor: "gray",
     },
   }
