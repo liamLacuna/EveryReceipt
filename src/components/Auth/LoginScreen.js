@@ -21,13 +21,8 @@ class LoginScreen extends React.Component {
       email: "",
       password: "",
       buttons: [
-<<<<<<< HEAD
         {text: "Login" },
         {text: "Sign Up" }
-=======
-        {text: "Login", onPress: this.login.bind(this)},
-        {text: "Sign Up", onPress: this.toggleSignUp.bind(this)}
->>>>>>> handled empty field
       ],
       clicked: false
     };
