@@ -91,7 +91,7 @@ class LoginScreen extends React.Component {
             />
           );
         })}
-        <Text style={{ color: "red" }}>
+        <Text style={styles.errorText}>
           {this.renderErrorMsg()}
         </Text>
       </ImageBackground>

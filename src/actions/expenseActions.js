@@ -8,6 +8,7 @@ import {
   SEARCH_EXPENSES,
   GET_TOTAL_PRICE
 } from "./types";
+import { key } from "../config/api_key";
 
 sorter = (arr) => {
   return arr.sort(
@@ -21,6 +22,73 @@ export const setItemsLoading = () => {
   return {
     type: EXPENSES_LOADING
   };
+};
+
+export const handleCloudOCR = async (uri) => {
+
+  const parsedObj = {
+    total: "",
+    store: ""
+  };
+
+  try {
+    let body = JSON.stringify({
+      requests: [
+        {
+          features: [
+            { type: "DOCUMENT_TEXT_DETECTION", maxResults: 10 },
+          ],
+          image: {
+            content: uri
+          }
+        }
+      ]
+    });
+    let response = await fetch(
+      "https://vision.googleapis.com/v1/images:annotate?key=" +
+        key,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: body
+      }
+    );
+
+    let store = null;
+
+    let test = JSON.stringify(response);
+    test = 
+      test.substring(
+        test.lastIndexOf("\"text\\"), test.lastIndexOf("}"));
+    test = test.split("\\n");
+
+    let result = -1;
+    for(var i in test) {
+      if(test[i].toLowerCase().indexOf("total") !== -1 &&
+      test[i].toLowerCase().indexOf("subtotal") === -1) {
+        let total = test[i].match(/\d+(?:\.\d+)?/g);
+        if(total !== null) {
+          result = total[0];
+        }
+        break;
+      }
+      if (test[i].toLowerCase().includes("walmart")) {
+        store = "Walmart";
+      } else if (test[i].toLowerCase().includes("target")) {
+        store = "Target";
+      } else if (test[i].toLowerCase().includes("walgreens")) {
+        store = "Walgreens";
+      }
+    }
+
+    parsedObj.total = result === -1 ? "" : result;
+    parsedObj.store = store === null ? "" : store;
+  } catch(err) { }
+
+  return parsedObj;  
 };
 
 export const addExpense = (expense) => {
@@ -119,7 +187,7 @@ export const searchExpenses = (queryType, query) => {
           };
 
           if(queryType === "store") {
-            if(currObj.store.toLowerCase() === query.toLowerCase()) {
+            if(currObj.store.toLowerCase().includes(query.toLowerCase())) {
               searchResults.push(currObj);
             }
           } else if (queryType === "price-greater-than") {

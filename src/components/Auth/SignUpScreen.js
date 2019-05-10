@@ -81,7 +81,7 @@ class SignUpScreen extends React.Component {
               />
             );
           })}
-          <Text style={{ color: "red" }}>
+          <Text style={styles.errorText}>
             {clicked && this.state.firstName === "" ? "Enter your first name.": ""}
             {clicked && this.state.firstName !== "" && this.state.lastName === "" ? "Enter your last name.": ""}
             {clicked && this.state.firstName !== "" && this.state.lastName !== "" && this.state.email === "" ? "Enter your email.": ""}
