@@ -49,6 +49,7 @@ export default class ExpenseItem extends React.Component {
               <View style={styles.confirmButton}>
                 <Icon.Button name="check-square" borderRadius={0} backgroundColor="white" size={35} color="green"  onPress={() => {
                   this.props.handleDelete(item.id);
+                  this.openModal();
                 }}/>
               </View>
             </View>

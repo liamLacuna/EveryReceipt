@@ -1,8 +1,7 @@
 import React from "react";
-import { Modal, Text, View, ScrollView} from "react-native";
+import {Modal, Text, View, ScrollView, TouchableOpacity, Button} from "react-native";
 import AddButton from "./AddButton.js";
 import ExpenseList from "../Common/ExpenseList.js";
-import CommonButton from "../Common/CommonButton.js";
 import firebase from "firebase";
 import { styles } from "../Common/styles";
 import { getExpenses, deleteExpense } from "../../actions/expenseActions";
@@ -181,8 +180,11 @@ class HomeScreen extends React.Component {
             onRequestClose={() => { this.setModalVisible(); }}>
             <View style={styles.container}>
               <Text style={styles.logoText} >
-                Sorry, we coulnd't get anything from your scan!
+                Sorry, we couldn't read your receipt!
               </Text>
+              <View style={styles.btnOK}>
+                <Button title="OK" onPress={()=> {this.setModalVisible();}} color="purple"/>
+              </View>
             </View>
           </Modal> 
           <ScrollView style={styles.scrollView}>
