@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Text, View, ScrollView, TouchableOpacity, Button} from "react-native";
+import { Text, View, ScrollView, Alert} from "react-native";
 import AddButton from "./AddButton.js";
 import ExpenseList from "../Common/ExpenseList.js";
 import firebase from "firebase";
@@ -66,7 +66,7 @@ class HomeScreen extends React.Component {
       });
       this.handleAddingOCRItem(resObj);
     } else {
-      this.setModalVisible();
+      this.openAlert();
     }
   }
 
@@ -120,26 +120,23 @@ class HomeScreen extends React.Component {
     }
   }
 
+  openAlert() {
+    Alert.alert(
+      "Sorry, we couldn't read your receipt!",
+      "",
+      [
+        { text: "Close", onPress: "" },
+      ],
+      {cancelable: false}
+    );
+  };
+
   render() {
     const { expenses } = this.props;
     return (
       <React.Fragment>
         <AddButton handlePress={this.handlePress.bind(this)} />
         <View style={styles.container}>
-          <Modal
-            transparent={false}
-            animationType="slide"
-            visible={this.state.modalVisible}
-            onRequestClose={() => { this.setModalVisible(); }}>
-            <View style={styles.container}>
-              <Text style={styles.logoText} >
-                Sorry, we couldn't read your receipt!
-              </Text>
-              <View style={styles.btnOK}>
-                <Button title="OK" onPress={()=> {this.setModalVisible();}} color="purple"/>
-              </View>
-            </View>
-          </Modal> 
           <ScrollView style={styles.scrollView}>
             {this.renderExpenseList()}
           </ScrollView>

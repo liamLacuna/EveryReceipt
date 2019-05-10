@@ -29,20 +29,6 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  btnOK: {
-    position: "absolute",
-    bottom: 100
-  },
-  cancelButton: {
-    position: "absolute",
-    left: 70,
-    bottom: 70
-  },
-  confirmButton: {
-    position: "absolute",
-    right: 70,
-    bottom: 70
-  },
   col: {
     marginTop: 10,
     minWidth: "20%",

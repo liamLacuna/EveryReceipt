@@ -1,7 +1,6 @@
 import React from "react";
-import {View, TouchableOpacity, Text, Button, Modal} from "react-native";
+import { View, TouchableOpacity, Text, Button, Alert } from "react-native";
 import { styles } from "../Common/styles";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 
 export default class ExpenseItem extends React.Component {
@@ -19,11 +18,17 @@ export default class ExpenseItem extends React.Component {
     });
   }
 
-  openModal = () => {
-    this.setState({
-      modalVisible: !this.state.modalVisible
-    });
-  }
+  confirm = (item) => {
+    Alert.alert(
+      "Are you sure you want to delete this entry?",
+      `${item.store}, ${item.items.length} items, $${item.total}`,
+      [
+        { text: "Yes", onPress: () => this.props.handleDelete(item.id)},
+        { text: "Cancel", onPress: "", style: "cancel" }
+      ],
+      {cancelable: false}
+    );
+  };
 
   renderDeleteButton(item) {
     if(this.state.displayOnly) {
@@ -32,28 +37,9 @@ export default class ExpenseItem extends React.Component {
       return (
         <View style={styles.deleteBtn}>
           <Button title="x" color="#ff0000"
-            onPress={
-              this.openModal
+            onPress={() =>
+              this.confirm(item)
             } />
-          <Modal  transparent={false}
-            animationType="slide"
-            visible={this.state.modalVisible}
-            onRequestClose={() => { this.openModal(); }}>
-            <View style={styles.container}>
-              <Text style={styles.logoText} >
-               Are you sure you want to delete this item?
-              </Text>
-              <View style={styles.cancelButton}>
-                <Icon.Button name="window-close" borderRadius={0} backgroundColor="white" size={35} color="red" onPress={this.openModal}/>
-              </View>
-              <View style={styles.confirmButton}>
-                <Icon.Button name="check-square" borderRadius={0} backgroundColor="white" size={35} color="green"  onPress={() => {
-                  this.props.handleDelete(item.id);
-                  this.openModal();
-                }}/>
-              </View>
-            </View>
-          </Modal>
         </View>
       );
     }
