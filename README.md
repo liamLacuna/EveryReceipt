@@ -10,7 +10,7 @@
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-You need **Node.js**, **React Native**, **Expo**, **Android Emulator** prior to installing.
+You need [**Node.js**](https://nodejs.org/en/), [**React Native**](https://facebook.github.io/react-native/), [**Expo**](https://expo.io/learn), [**Android Emulator(Genymotion)**](https://www.genymotion.com/fun-zone/) prior to installing.
 * Install Node.js
     * On Windows, Linux and MacOS, install the latest [Node version](https://nodejs.org/en/download/) from the Node.js website. 
 * Install React Native
