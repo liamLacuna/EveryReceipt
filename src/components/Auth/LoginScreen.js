@@ -62,6 +62,20 @@ class LoginScreen extends React.Component {
   render() {
     const { authError } = this.props;
     const clicked = this.state.clicked;
+    if(clicked && this.state.email === "") {
+      return "Enter an Email.";
+    } else if (clicked && this.state.email !== "" 
+    && this.state.password === "") {
+      return "Enter a password.";
+    } else if (authError && this.state.email !== ""
+    && this.state.password !== "") {
+      return "Login failed.";
+    } else {
+      return "";
+    }
+  }
+
+  render() {
     return (
       <ImageBackground source={bgImage} style={styles.container}>
         <View style={styles.logoContainer}>

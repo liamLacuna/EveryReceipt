@@ -54,6 +54,11 @@ export const styles = StyleSheet.create({
     paddingTop: 100,
     paddingBottom: 100,
   },
+  errorText: {
+    color: "red", 
+    backgroundColor: "white", 
+    fontSize: 20
+  },
   dropdown: {
     width: Dimensions.get("window").width - 125,
     height: 45,
@@ -83,7 +88,8 @@ export const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "500",
     marginTop: 10,
-    opacity: 0.5
+    opacity: 0.5,
+    marginLeft: 30
   },
   input: {
     width: Dimensions.get("window").width - 85,

@@ -1,12 +1,14 @@
 import React from "react";
-import { View, TouchableOpacity, Text, Button } from "react-native";
+import { View, TouchableOpacity, Text, Button, Alert } from "react-native";
 import { styles } from "../Common/styles";
+
 
 export default class ExpenseItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayOnly: false
+      displayOnly: false,
+      modalVisible: false
     };
   }
 
@@ -14,7 +16,19 @@ export default class ExpenseItem extends React.Component {
     this.setState({
       displayOnly: typeof this.props.displayOnly !== "undefined"
     });
-  }  
+  }
+
+  confirm = (item) => {
+    Alert.alert(
+      "Are you sure you want to delete this entry?",
+      `${item.store}, ${item.items.length} items, $${item.total}`,
+      [
+        { text: "Yes", onPress: () => this.props.handleDelete(item.id)},
+        { text: "Cancel", onPress: "", style: "cancel" }
+      ],
+      {cancelable: false}
+    );
+  };
 
   renderDeleteButton(item) {
     if(this.state.displayOnly) {
@@ -23,9 +37,9 @@ export default class ExpenseItem extends React.Component {
       return (
         <View style={styles.deleteBtn}>
           <Button title="x" color="#ff0000"
-            onPress={() => {  
-              this.props.handleDelete(item.id);
-            }} /> 
+            onPress={() =>
+              this.confirm(item)
+            } />
         </View>
       );
     }

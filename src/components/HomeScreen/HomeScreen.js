@@ -1,15 +1,14 @@
 import React from "react";
-import { Modal, Text, View, ScrollView} from "react-native";
+import { Text, View, ScrollView, Alert} from "react-native";
 import AddButton from "./AddButton.js";
 import ExpenseList from "../Common/ExpenseList.js";
-import CommonButton from "../Common/CommonButton.js";
 import firebase from "firebase";
 import { styles } from "../Common/styles";
-import { getExpenses, deleteExpense } from "../../actions/expenseActions";
+import { getExpenses, deleteExpense, handleCloudOCR } from "../../actions/expenseActions";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
 import { key } from "../../config/api_key";
-import { ImagePicker, Permissions, Constants } from "expo";
+import { ImagePicker, Permissions } from "expo";
 
 
 class HomeScreen extends React.Component {
@@ -57,80 +56,18 @@ class HomeScreen extends React.Component {
       this.props.navigation.navigate("ManualAddScreen");
   }
 
-  handleCloudOCR = async (uri) => {
+  getReceiptText = async (uri) => {
     if (typeof uri === "undefined") return;
     
-    try {
-      let body = JSON.stringify({
-        requests: [
-          {
-            features: [
-              { type: "DOCUMENT_TEXT_DETECTION", maxResults: 10 },
-            ],
-            image: {
-              content: uri
-            }
-          }
-        ]
+    let resObj = await handleCloudOCR(uri);  
+    if(resObj.total !== "" || resObj.store !== "") {
+      this.setState({
+        valueParsed: true
       });
-      let response = await fetch(
-        "https://vision.googleapis.com/v1/images:annotate?key=" +
-          key,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          method: "POST",
-          body: body
-        }
-      );
-
-      let store = null;
-      
-      let test = JSON.stringify(response);
-      test = 
-        test.substring(
-          test.lastIndexOf("\"text\\"), test.lastIndexOf("}"));
-      test = test.split("\\n");
-
-      let result = -1;
-      for(var i in test) {
-        if(test[i].toLowerCase().indexOf("total") !== -1 &&
-        test[i].toLowerCase().indexOf("subtotal") === -1) {
-          let total = test[i].match(/\d+(?:\.\d+)?/g);
-          if(total !== null) {
-            result = total[0];
-          }
-          break;
-        }
-        if (test[i].toLowerCase().includes("walmart")) {
-          store = "Walmart";
-        } else if (test[i].toLowerCase().includes("target")) {
-          store = "Target";
-        } else if (test[i].toLowerCase().includes("walgreens")) {
-          store = "Walgreens";
-        }
-      }
-      
-      if(result !== -1 || store !== null) {
-        
-        const parsedObj = {
-          total: result === -1 ? "" : result,
-          store: store === null ? "" : store
-        };
-        this.setState({
-          parsedObj
-        });
-        setTimeout(() => { }, 1000);
-        this.setState({
-          valueParsed: true
-        });
-        this.handleAddingOCRItem(parsedObj);
-      } else {
-        this.setModalVisible();
-      }
-    } catch(err) { }
+      this.handleAddingOCRItem(resObj);
+    } else {
+      this.openAlert();
+    }
   }
 
   handleAddingOCRItem(item) {
@@ -147,8 +84,9 @@ class HomeScreen extends React.Component {
       allowsEditing: true,
       base64: true,
     });
-    this.handleCloudOCR(result.base64);
+    this.getReceiptText(result.base64);
   };
+
   useLibraryHandler = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -156,7 +94,7 @@ class HomeScreen extends React.Component {
       base64: true,
     });
     this.setState({ result });
-    this.handleCloudOCR(result.base64);
+    this.getReceiptText(result.base64);
   };
 
   handlePress(btnId) {
@@ -167,6 +105,31 @@ class HomeScreen extends React.Component {
     if (btnId === "camera")
       this.useCameraHandler();
   }
+
+  renderExpenseList() {
+    const { expenses } = this.props;
+    if(expenses.length === 0) {
+      return (<Text style={styles.logoText}>You don't have any expenses! Add some below.</Text>);
+    } else {
+      return (
+        <ExpenseList
+          expenses={expenses}
+          deleteExpense={this.handleDelete.bind(this)}
+          toggleEdit={this.toggleEdit.bind(this)} />
+      );
+    }
+  }
+
+  openAlert() {
+    Alert.alert(
+      "Sorry, we couldn't read your receipt!",
+      "",
+      [
+        { text: "Close", onPress: "" },
+      ],
+      {cancelable: false}
+    );
+  };
 
   render() {
     const { expenses } = this.props;
@@ -186,10 +149,7 @@ class HomeScreen extends React.Component {
             </View>
           </Modal> 
           <ScrollView style={styles.scrollView}>
-            <ExpenseList
-              expenses={expenses}
-              deleteExpense={this.handleDelete.bind(this)}
-              toggleEdit={this.toggleEdit.bind(this)} />
+            {this.renderExpenseList()}
           </ScrollView>
         </View>
       </React.Fragment>
