@@ -91,8 +91,10 @@ class LoginScreen extends React.Component {
             />
           );
         })}
-        <Text style={styles.errorText}>
-          {this.renderErrorMsg()}
+        <Text style={{ color: "red" }}>
+          {clicked && this.state.email === "" ? "Enter a Email.": ""}
+          {clicked && this.state.email !== "" && this.state.password === "" ? "Enter a password.": ""}
+          {authError && this.state.email !== "" && this.state.password !== "" ? "Login Failed." : ""}
         </Text>
       </ImageBackground>
     );

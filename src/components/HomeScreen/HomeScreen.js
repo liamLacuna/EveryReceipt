@@ -137,6 +137,17 @@ class HomeScreen extends React.Component {
       <React.Fragment>
         <AddButton handlePress={this.handlePress.bind(this)} />
         <View style={styles.container}>
+          <Modal
+            transparent={false}
+            animationType="slide"
+            visible={this.state.modalVisible}
+            onRequestClose={() => { this.setModalVisible(); }}>
+            <View style={styles.container}>
+              <Text style={styles.logoText} >
+                Sorry, we coulnd't get anything from your scan!
+              </Text>
+            </View>
+          </Modal> 
           <ScrollView style={styles.scrollView}>
             {this.renderExpenseList()}
           </ScrollView>
